@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign Up</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/inputForm.css">
+</head>
+
+<body>
+  <div id="signup">
+    <video autoplay muted loop id="myVideo">
+      <source src="video.mp4" type="video/mp4" />
+    </video>
+    <div class="main-menu">
+      <% if (message.length > 0) { %>
+      <div><%= message %></div>
+      <% } %>
+
+        
+      <form action="/signup" method="post">
+        <h1 style="text-align: center;"> Sign Up </h1>
+        <div class="page">
+          <label class="field a-field a-field_a1">
+            <input class="field__input a-field__input" placeholder="e.g. melnik909@ya.ru" required type="text" name="email" id="email">
+            <span class="a-field__label-wrap">
+              <span class="a-field__label">Email</span>
+            </span>
+          </label>
+          <label class="field a-field a-field_a1">
+            <input class="field__input a-field__input" placeholder="password" required type="text" name="password" id="password">
+            <span class="a-field__label-wrap">
+              <span class="a-field__label">Password</span>
+            </span>
+          </label>
+        </div>
+        <button type="submit" class="sumbit-button">Sign Up</button>
+        <div class="navigation">
+          <a class="access-button" href="/login">Log In</a>
+          <a class="access-button" href="/">Return to Home</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

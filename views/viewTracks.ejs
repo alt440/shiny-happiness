@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>View Tracks Demo</title>
+</head>
+<body>
+  <!--see what was done from the file routes.js-->
+  <!--get content from backend-->
+  <% for(var i=0;i<tracks.results.length && i<5;i++){
+          %>
+          <!-- you can extract title, imgUrl, or id -->
+          <img src="<%= tracks.results[i].imgUrl %>" height="42" width="42"></img>
+          <p><%= tracks.results[i].title %></p>
+          <p><%= tracks.results[i].artist %></p>
+        <% } %>
+  <script>
+    var x = "<%= tracks.results[0].title %>";
+    var a = 1;
+  </script>
+</body>
+</html>

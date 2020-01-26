@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to Moods!</title>
+  <link rel="stylesheet" type="text/css" href="css/player.css">
+  <!--<script src="js/youtube-player.js"></script>-->
+</head>
+
+<body>
+  <div>
+    <div id="rewind"><img src="rewind.png" id="rewindImg"></img></div>
+    <div id="play"><img src="play.png" id="playImg"></img></div>
+    <div id="forward"><img src="forward.png" id="forwardImg"></img></div>
+  </div>
+  <div id="youtube-audio"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/youtube-data-extract.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=init"></script>
+  <script src="js/getTracksBackend.js"></script>
+  <script>
+    var index = 1;
+    var tracksJS = getTracksBackendResult();
+    searchFor(tracksJS.results[0].title);
+
+    //now, say that if someone clicks on forward/rewind, index changes.
+    $(document).ready(function(){
+      $('#forward').click(function(){
+        if(index!=tracksJS.results.length-1){
+          searchFor(tracksJS.results[index].title);
+          index+=1;
+        }
+      });
+
+      $('#rewind').click(function(){
+        if(index>0){
+          searchFor(tracksJS.results[index].title);
+          index-=1;
+        }
+      })
+    });
+  </script>
+
+</body>
+
+</html>

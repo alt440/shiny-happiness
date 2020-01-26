@@ -1,0 +1,127 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to Moods!</title>
+  <link rel="stylesheet" type="text/css" href="css/player.css">
+</head>
+
+<body>
+  <div id="header">
+    <div id="back"><img src="back.png" id="backImg"></img></div>
+    <div id="logo"><img src="moodLogo.svg" id="logoImg"></img></div>
+  </div>
+  <div id="contentButtons">
+    <div id="rewind"><img src="rewind.png" id="rewindImg"></img></div>
+    <div id="play"><img src="play.png" id="playImg"></img></div>
+    <div id="forward"><img src="forward.png" id="forwardImg"></img></div>
+    <label id="trackNb"></label>
+  </div>
+  <div id="youtube-audio"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/youtube-data-extract.js"></script>
+  <% console.log(tracks);
+  tracksJSON = JSON.parse(tracks);
+      var index = 0;
+      var list = [];
+      for(var i=0;i<tracksJSON.results.length;i++){
+        list.push(tracksJSON.results[i].title+" "+tracksJSON.results[i].artist);
+      }
+      if(tracksJSON.results.length > 0){
+        //extract artist and put in var
+        %>
+        <script>
+          var index = 0;
+          searchFor('<%= tracksJSON.results[0].title %>');
+
+          var listTitles = <%- JSON.stringify(list) %>;
+
+          //now, say that if someone clicks on forward/rewind, index changes.
+          $(document).ready(function(){
+            $('#trackNb').html(index+"/"+listTitles.length);
+            $('#forward').click(async function(){
+              $('#forward').prop("disabled",true);
+              console.log(index);
+              if(index< <%= tracksJSON.results.length %>-1){
+                searchFor(listTitles[index]);
+
+
+              //prepare the request.
+              //q is the search value
+              console.log(listTitles[index]);
+              var request = gapi.client.youtube.search.list({
+                part: "snippet",
+                type: "video",
+                q:encodeURIComponent(listTitles[index]).replace(/%20/g,"+"),
+                maxResults: 3,
+                order: "viewCount",
+                publishedAfter: "2003-01-01T00:00:00Z"
+              });
+              //execute the request
+              request.execute(function(response){
+                var results = response.result;
+                //taking first result of youtube request
+                videoId = results.items[0].id.videoId;
+                loadYoutubeVideo(videoId);
+                $('#trackNb').html(index+"/"+listTitles.length);
+                $.each(results.items, function(index, item){
+                  console.log(item);
+                });
+              });
+              index+=1;
+              }
+
+              $('#forward').prop("disabled",false);
+            });
+
+            $('#rewind').click(async function(){
+              console.log(index);
+              $('#rewind').prop("disabled",true);
+              if(index>0){
+
+                searchFor(listTitles[index]);
+
+
+              //prepare the request.
+              //q is the search value
+              console.log(index);
+              console.log(listTitles[index]);
+              var request = gapi.client.youtube.search.list({
+                part: "snippet",
+                type: "video",
+                q:encodeURIComponent(listTitles[index]).replace(/%20/g,"+"),
+                maxResults: 3,
+                order: "viewCount",
+                publishedAfter: "2003-01-01T00:00:00Z"
+              });
+
+              //execute the request
+              request.execute(function(response){
+                var results = response.result;
+                //taking first result of youtube request
+                videoId = results.items[0].id.videoId;
+                loadYoutubeVideo(videoId);
+                $('#trackNb').html(index+"/"+listTitles.length);
+                $.each(results.items, function(index, item){
+                  console.log(item);
+                });
+              });
+              index-=1;
+            }
+
+            $('#rewind').prop("disabled",false);
+            });
+
+            $('#back').click(function(){
+              window.location.href = "/profile";
+            });
+          });
+        </script>
+        <%
+      }
+    %>
+  <script src="https://apis.google.com/js/client.js?onload=init"></script>
+</body>
+
+</html>

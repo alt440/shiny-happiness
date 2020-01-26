@@ -1,0 +1,23 @@
+Go to mlab to configure a database. Once you have created it, create a new user
+of the DB and put that in the URL in database.js.
+
+Tutorial followed is here -> https://scotch.io/tutorials/easy-node-authentication-setup-and-local
+Everything is in that link.
+
+Create your logo on:
+https://www.freelogodesign.org/preview?lang=en&name=M00ds&logo=1b946055-133d-4d17-9c8c-c3e2e5af3a75
+
+Video found from:
+https://www.pexels.com/video/people-dancing-in-a-music-festival-3326344/
+
+Gradient color generator for CSS:
+https://www.colorzilla.com/gradient-editor/
+
+Look at login form by Sergey Shmidt:
+https://designmodo.com/login-form-examples/
+
+Login and signup going to appear on top of main page. Going to create a darker
+background when clicking on Sign Up and Log In buttons.
+
+Search here for emoticons of various types:
+https://emojipedia.org/

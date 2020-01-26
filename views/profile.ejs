@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Moods Menu</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="fontawesome/css/all.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/getTracksBackend.js"></script>
+  <script src="js/randomQueriesFrontEnd.js"></script>
+</head>
+
+<body>
+  <label class="header-info">What feeling are you looking for today?</label>
+  <ul class="mood-menu">
+    <li class="mood" id="happy">
+      <i class="fas fa-smile-beam fa-3x"></i>
+      <p>
+        Happiness
+      </p>
+    </li>
+    <li class="mood" id="festive">
+      <i class="fas fa-bolt fa-3x"></i>
+      <p>
+        Festive
+      </p>
+    </li>
+    <li class="mood" id="adventurous">
+      <i class="fas fa-plane fa-3x"></i>
+      <p>
+        Adventurous
+      </p>
+    </li>
+    <li class="mood" id="calm">
+      <i class="fas fa-yin-yang fa-3x"></i>
+      <p>
+        Calm
+      </p>
+    </li>
+    <!--<li class="mood" id="serious">
+      <i class="fas fa-user-tie fa-3x"></i>
+      <p>
+        Serious
+      </p>
+    </li>-->
+  </ul>
+  <input type="button" id="generatePlaylist" onclick="showYoutubeVideos()" value="Generate Playlist">
+
+  <script>
+    var isMoodSelected = 0;
+    var id = "";
+    function showYoutubeVideos(){
+      if(isMoodSelected === 0){
+        window.alert("Oops! You did not select a mood.");
+      } else{
+        //generate 3 random numbers
+        var rd1 = Math.floor(Math.random()*getQueries().length);
+        /*var rd2 = Math.floor(Math.random()*getQueries().length);
+        var rd3 = Math.floor(Math.random()*getQueries().length);
+        if(rd1 === rd2){
+          while(rd1 === rd2){
+            rd2 = Math.floor(Math.random()*getQueries().length);
+          }
+        }
+
+        if(rd2 === rd3 || rd3 === rd1){
+          while(rd2 === rd3 || rd3 === rd1){
+            rd3 = Math.floor(Math.random()*getQueries().length);
+          }
+        }*/
+        var musicResults = {};
+        return new Promise(function(resolve, reject){
+          var musicResults = getTracksBackend(getQueries()[rd1],id);
+          resolve(musicResults);
+        });
+        /*return new Promise(function(resolve, reject){
+          musicResults = getTracksBackendResult(getQueries()[rd1],id);
+          resolve(musicResults);
+        }).then(new Promise (async function(resolve, reject){
+          var wave2 = await getTracksBackendResult(getQueries()[rd2], id);
+          if(wave2.results !== undefined){
+            for(var i=0;i<wave2.results.length;i++){
+                musicResults.push(wave2[i]);
+            }
+          }
+          resolve(wave2);
+        })).then(async function(){
+          var wave3 = await getTracksBackendResult(getQueries()[rd3], id);
+          if(wave3.results !== undefined){
+            for(var i=0;i<wave3.results.length;i++){
+                musicResults.push(wave3[i]);
+            }
+          }
+          //finally, set the backend result to be the 3 results combined
+          var response = await setTracksBackendResult(JSON.stringify(musicResults));
+          window.location.href = '/viewYoutubeAPI';
+        });*/
+      }
+    }
+
+    $(document).ready(function(){
+      $('.mood').click(function(){
+        if(isMoodSelected == 0){
+          $(this).css("color","#27262c");
+          isMoodSelected = 1;
+          id = $(this).attr('id');
+        } else{
+          $('#'+id).css("color","white");
+          $(this).css("color","#27262c");
+          id=$(this).attr('id');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
